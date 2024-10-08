@@ -1,0 +1,28 @@
+##  file is found:
+## cesm3_0_beta01/ccs_config/machines/config_batch.xml
+
+
+
+
+
+  <!-- eiger is slurm -->
+  <batch_system MACH="eiger" type="slurm">
+    <batch_submit>sbatch</batch_submit>
+    <submit_args>
+      <arg flag="--time" name="$JOB_WALLCLOCK_TIME"/>
+      <arg flag="-p" name="$JOB_QUEUE"/>
+      <arg flag="--account" name="$PROJECT"/>
+    </submit_args>
+    <directives>
+      <directive>--ntasks-per-node=128 </directive>
+      <directive>--ntasks-per-core=1 </directive>
+      <directive>--constraint=mc </directive>
+      <directive>--mail-type=END</directive>
+      <directive>--mail-type=FAIL</directive>
+    </directives>
+    <queues>
+      <queue walltimemin="0" walltimemax="24:00:00" nodemin="0" nodemax="512" default="true">normal</queue>
+    </queues>
+  </batch_system>
+
+

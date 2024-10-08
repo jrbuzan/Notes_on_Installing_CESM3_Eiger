@@ -1,0 +1,183 @@
+#########################################################
+####### Difference in Header for cesm3_0_beta01   #######
+####### Below this are the actually changes made. #######
+####### The cam,cdeps,cice,mizuroute,mosart,rtm   #######
+####### are superficial changes.                  #######
+####### jrbuzan 15.08.2024                        #######
+#########################################################
+
+diff --git a/ccs_config b/ccs_config
+--- a/ccs_config
++++ b/ccs_config
+@@ -1 +1 @@
+-Subproject commit 797acd7014f10c8e46e50403cbf0fdf52230a2b5
++Subproject commit 797acd7014f10c8e46e50403cbf0fdf52230a2b5-dirty
+diff --git a/components/cam b/components/cam
+--- a/components/cam
++++ b/components/cam
+@@ -1 +1 @@
+-Subproject commit ab476f9b7345cbefdc4cf67ff17f0fe85d8c7387
++Subproject commit ab476f9b7345cbefdc4cf67ff17f0fe85d8c7387-dirty
+diff --git a/components/cdeps b/components/cdeps
+index 7a522c8..b4b3ac5 160000
+--- a/components/cdeps
++++ b/components/cdeps
+@@ -1 +1 @@
+-Subproject commit 7a522c828c32dc35777992653f281ec525509c4a
++Subproject commit b4b3ac5bba287d1420657e47e4bf3ee329c4594d
+diff --git a/components/cice b/components/cice
+index 58d73e9..bdf6ea0 160000
+--- a/components/cice
++++ b/components/cice
+@@ -1 +1 @@
+-Subproject commit 58d73e91e542177b0d80d2f8d886176eb817893c
++Subproject commit bdf6ea04d6133434fcaa4de5336de106f01290d0
+diff --git a/components/mizuroute b/components/mizuroute
+index c55bd1a..81c720c 160000
+--- a/components/mizuroute
++++ b/components/mizuroute
+@@ -1 +1 @@
+-Subproject commit c55bd1ab746734ea77a00606dde895ab034edf1a
++Subproject commit 81c720c7ee51f9c69f2934f696078c42f4493565
+diff --git a/components/mosart b/components/mosart
+index abd2bc4..8c682b1 160000
+--- a/components/mosart
++++ b/components/mosart
+@@ -1 +1 @@
+-Subproject commit abd2bc4bc7ee789aba2eb46c834c3d9ee51428b1
++Subproject commit 8c682b1b7f15d146816de302e0d359da3e957056
+diff --git a/components/rtm b/components/rtm
+index 2d6a3c7..88503ad 160000
+--- a/components/rtm
++++ b/components/rtm
+@@ -1 +1 @@
+-Subproject commit 2d6a3c7b224abcd9af9b8ebb1ca939c5b9e59681
++Subproject commit 88503adbc275fb2ccbb6b598e460deaeb140e515
+diff --git a/libraries/FMS b/libraries/FMS
+--- a/libraries/FMS
++++ b/libraries/FMS
+@@ -1 +1 @@
+-Subproject commit 270433531d33c64da7944d80564fe39a84917d26
++Subproject commit 270433531d33c64da7944d80564fe39a84917d26-dirty
+
+
+
+##################################################################
+####### Difference in libraries/FMS/src for cesm3_0_beta01 #######
+##################################################################
+
+diff --git a/affinity/affinity.c b/affinity/affinity.c
+index fff6622f..43e8837b 100644
+--- a/affinity/affinity.c
++++ b/affinity/affinity.c
+@@ -47,7 +47,8 @@
+ /**
+  * gettid function for systems that do not have this function (e.g. on Mac OS.)
+  */
+-#ifndef HAVE_GETTID
++#if 0
++//#ifndef HAVE_GETTID
+ static pid_t gettid(void)
+ {
+ #if defined(__APPLE__)
+lines 1-14/14 (END)
+
+
+###########################################################
+####### Difference in ccs_config for cesm3_0_beta01 #######
+###########################################################
+
+diff --git a/machines/config_batch.xml b/machines/config_batch.xml
+index 1f1052f..0a7db0e 100644
+--- a/machines/config_batch.xml
++++ b/machines/config_batch.xml
+@@ -180,6 +180,26 @@
+     </directives>
+   </batch_system>
+ 
++  <!-- eiger is slurm -->
++  <batch_system MACH="eiger" type="slurm">
++    <batch_submit>sbatch</batch_submit>
++    <submit_args>
++      <arg flag="--time" name="$JOB_WALLCLOCK_TIME"/>
++      <arg flag="-p" name="$JOB_QUEUE"/>
++      <arg flag="--account" name="$PROJECT"/>
++    </submit_args>
++    <directives>
++      <directive>--ntasks-per-node=128 </directive>
++      <directive>--ntasks-per-core=1 </directive>
++      <directive>--constraint=mc </directive>
++      <directive>--mail-type=END</directive>
++      <directive>--mail-type=FAIL</directive>
++    </directives>
++    <queues>
++      <queue walltimemin="0" walltimemax="24:00:00" nodemin="0" nodemax="512" default="true">normal</queue>
++    </queues>
++  </batch_system>
++
+   <batch_system MACH="aleph" type="pbs" >
+     <directives>
+       <directive>-l nodes={{ num_nodes }}</directive>
+diff --git a/machines/config_machines.xml b/machines/config_machines.xml
+index 2c0a847..95ddd68 100644
+--- a/machines/config_machines.xml
++++ b/machines/config_machines.xml
+@@ -74,6 +74,7 @@ This allows using a different mpirun command to launch unit tests
+     <value MACH="thunder">.*.thunder.ucar.edu</value>
+     <value MACH="ubuntu-latest">$ENV{CIME_TEST_PLATFORM}:ubuntu-latest</value>
+     <value MACH="zeus">(login[1,2]-ib|n[0-9][0-9][0-9]-ib)</value>
++    <value MACH="eiger">jbuzan eiger.cscs.ch</value>
+   </NODENAME_REGEX>    
+ 
+
+
+
+###########################################################
+####### Difference in ccs_config for cesm3_0_beta01 #######
+###########################################################
+
+
+diff --git a/machines/config_batch.xml b/machines/config_batch.xml
+index 1f1052f..0a7db0e 100644
+--- a/machines/config_batch.xml
++++ b/machines/config_batch.xml
+@@ -180,6 +180,26 @@
+     </directives>
+   </batch_system>
+ 
++  <!-- eiger is slurm -->
++  <batch_system MACH="eiger" type="slurm">
++    <batch_submit>sbatch</batch_submit>
++    <submit_args>
++      <arg flag="--time" name="$JOB_WALLCLOCK_TIME"/>
++      <arg flag="-p" name="$JOB_QUEUE"/>
++      <arg flag="--account" name="$PROJECT"/>
++    </submit_args>
++    <directives>
++      <directive>--ntasks-per-node=128 </directive>
++      <directive>--ntasks-per-core=1 </directive>
++      <directive>--constraint=mc </directive>
++      <directive>--mail-type=END</directive>
++      <directive>--mail-type=FAIL</directive>
++    </directives>
++    <queues>
++      <queue walltimemin="0" walltimemax="24:00:00" nodemin="0" nodemax="512" default="true">normal</queue>
++    </queues>
++  </batch_system>
++
+   <batch_system MACH="aleph" type="pbs" >
+     <directives>
+       <directive>-l nodes={{ num_nodes }}</directive>
+diff --git a/machines/config_machines.xml b/machines/config_machines.xml
+index 2c0a847..95ddd68 100644
+--- a/machines/config_machines.xml
++++ b/machines/config_machines.xml
+@@ -74,6 +74,7 @@ This allows using a different mpirun command to launch unit tests
+     <value MACH="thunder">.*.thunder.ucar.edu</value>
+     <value MACH="ubuntu-latest">$ENV{CIME_TEST_PLATFORM}:ubuntu-latest</value>
+     <value MACH="zeus">(login[1,2]-ib|n[0-9][0-9][0-9]-ib)</value>
++    <value MACH="eiger">jbuzan eiger.cscs.ch</value>
+   </NODENAME_REGEX>    
+ 
+ 
+

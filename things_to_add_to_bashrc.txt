@@ -1,0 +1,26 @@
+###########################################
+# Intel 				  #
+# need to change to ${USER} paths         #
+###########################################
+export PIO_PATH=/users/jbuzan/pio_jon/PIO_INTEL/
+export ESMF_PATH=/users/jbuzan/esmf_jon/ESMF_INTEL/
+export ESMFMKFILE=/users/jbuzan/esmf_jon/ESMF_INTEL/lib/libO/Linux.intel.64.mpich.default/esmf.mk
+
+###########################################
+# GNU					  #
+# need to change to ${USER} paths         #
+###########################################
+#export PIO_PATH=/users/jbuzan/pio_jon/PIO/
+#export ESMF_PATH=/users/jbuzan/esmf_jon/ESMF/
+#export ESMFMKFILE=/users/jbuzan/esmf_jon/ESMF/lib/libO/Linux.gfortran.64.mpich.default/esmf.mk
+
+export ESMF_LIBDIR=${ESMF_PATH}lib
+
+echo $ESMF_PATH
+echo $PIO_PATH
+echo $LD_LIBRARY_PATH
+echo $ESMFMKFILE
+echo $ESMF_LIBDIR
+
+export PATH="$HOME/bin:$PATH"
+

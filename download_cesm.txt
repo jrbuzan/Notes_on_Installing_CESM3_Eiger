@@ -1,0 +1,11 @@
+
+###### downloading cesm ####### 
+git clone -b XXXXXXXX
+
+#### e.g. #######
+git clone -b CESM3_0_beta01 
+
+##### in the directory for cesm what is downloaded? ####
+./describe_version
+
+

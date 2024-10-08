@@ -1,0 +1,6 @@
+# this should be added to the configure_machines.xml in the ccs_config/machines directory
+
+    <value MACH="eiger">jbuzan eiger.cscs.ch</value>
+
+
+

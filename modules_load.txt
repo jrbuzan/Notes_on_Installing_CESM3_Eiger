@@ -1,0 +1,56 @@
+###### Example Modules ########
+#Currently Loaded Modules:
+#  1) craype-x86-rome      4) xpmem/2.8.2-1.0_3.9__g84a27a5.shasta   7) cray/23.12       10) cray-dsmml/0.2.2     13) PrgEnv-gnu/8.5.0               16) cray-netcdf-hdf5parallel/4.9.0.9
+#  2) libfabric/1.15.2.0   5) perftools-base/23.12.0                 8) gcc-native/12.3  11) cray-mpich/8.1.28    14) cray-parallel-netcdf/1.12.3.9  17) cray-python/3.11.5
+#  3) craype-network-ofi   6) cpe/23.12                              9) craype/2.7.30    12) cray-libsci/23.12.5  15) cray-hdf5-parallel/1.12.2.9
+
+
+#######################################
+##### when module purge is executed ###   
+##### follow instructions before    ### 
+##### activating new modules        ### 
+#######################################
+module purge
+
+#######################################
+############# GNU Compilers ###########
+#######################################
+module load cray/23.12
+module load PrgEnv-gnu/8.5.0
+module load cray-parallel-netcdf
+module load cray-hdf5-parallel
+module load cray-netcdf-hdf5parallel
+module load cray-python
+
+module list
+##########################################
+####### Load CMake After PIO #############
+####### and ESMF are constructed #########
+##########################################
+
+module load CMake
+module list
+
+module load PrgEnv-intel/8.5.0
+module list
+
+#######################################
+######  Intel compilers ###############
+#######################################
+module load cray/23.12
+module load PrgEnv-intel/8.5.0
+module list
+module load cray-parallel-netcdf
+module load cray-hdf5-parallel
+module load cray-netcdf-hdf5parallel
+module load cray-python
+
+module list
+
+##########################################
+####### Load CMake After PIO #############
+####### and ESMF are constructed #########
+##########################################
+module load CMake
+module list
+

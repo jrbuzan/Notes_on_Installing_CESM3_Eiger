@@ -1,0 +1,43 @@
+  <machine MACH="eiger">
+    <DESC>CSCS AMD EPYC 7742 CPU Rome system</DESC>
+    <OS>LINUX</OS>
+    <COMPILERS>intel,gnu</COMPILERS>
+    <MPILIBS>mpich</MPILIBS>
+    <CIME_OUTPUT_ROOT>/capstor/scratch/cscs/jbuzan/cesm3_0_beta01/output</CIME_OUTPUT_ROOT>
+    <DIN_LOC_ROOT>/capstor/scratch/cscs/jbuzan/cesm3_0_beta01/inputdata</DIN_LOC_ROOT>
+    <DIN_LOC_ROOT_CLMFORC>/capstor/scratch/cscs/jbuzan/cesm3_0_beta01/inputdata/atm/datm7</DIN_LOC_ROOT_CLMFORC>
+    <DOUT_S_ROOT>/capstor/scratch/cscs/jbuzan/cesm3_0_beta01/archive/$CASE</DOUT_S_ROOT>
+    <BASELINE_ROOT>$ENV{CESMDATAROOT}/cesm_baselines</BASELINE_ROOT>
+    <CCSM_CPRNC>/capstor/scratch/cscs/jbuzan/cesm3_0_beta01/cprnc/cprnc</CCSM_CPRNC>
+    <GMAKE_J>16</GMAKE_J>
+    <BATCH_SYSTEM>slurm</BATCH_SYSTEM>
+    <SUPPORTED_BY>jonathan.buzan@unibe.ch</SUPPORTED_BY>
+    <MAX_TASKS_PER_NODE>128</MAX_TASKS_PER_NODE>
+    <MAX_MPITASKS_PER_NODE>128</MAX_MPITASKS_PER_NODE>
+    <mpirun mpilib="default">
+     <executable>srun</executable>
+      <arguments>
+        <arg name="cpubind"> --cpu_bind=rank</arg>
+      </arguments>
+    </mpirun>
+    <module_system type="module" allow_error="true">
+      <init_path lang="python">/opt/cray/pe/modules/default/init/python.pm</init_path>
+      <init_path lang="perl">/opt/cray/pe/modules/default/init/perl.pm</init_path>
+      <init_path lang="csh">/opt/cray/pe/modules/default/init/csh</init_path>
+      <init_path lang="sh">/opt/cray/pe/modules/default/init/sh</init_path>
+      <cmd_path lang="perl">/opt/cray/pe/modules/default/bin/modulecmd perl</cmd_path>
+      <cmd_path lang="python">/opt/cray/pe/modules/default/bin/modulecmd python</cmd_path>
+      <cmd_path lang="sh">module</cmd_path>
+      <cmd_path lang="csh">module</cmd_path>
+    </module_system>
+    <environment_variables>
+      <env name="OMP_STACKSIZE">128M</env>
+      <env name="FI_CXI_RX_MATCH_MODE">hybrid</env>
+    </environment_variables>
+    <environment_variables comp_interface="nuopc">
+      <!-- required on all systems for timing file output --> 
+      <env name="ESMF_RUNTIME_PROFILE">ON</env>
+      <env name="ESMF_RUNTIME_PROFILE_OUTPUT">SUMMARY</env>
+    </environment_variables>
+  </machine>
+
